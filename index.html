@@ -423,7 +423,7 @@ setInterval(() => {
 
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.9.0/firebase-app.js";
-import { getFirestore, doc, updateDoc, increment, getDoc }
+import { getFirestore, doc, updateDoc, increment, onSnapshot }
 from "https://www.gstatic.com/firebasejs/12.9.0/firebase-firestore.js";
 
 const firebaseConfig = {
@@ -440,29 +440,27 @@ const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 const viewsRef = doc(db, "stats", "bio");
 
-async function updateViews() {
-  try {
-    const alreadyCounted = localStorage.getItem("bio_view_counted");
+async function incrementIfNeeded() {
+  const alreadyCounted = localStorage.getItem("bio_view_counted");
 
-    if (!alreadyCounted) {
-      await updateDoc(viewsRef, {
-        views: increment(1)
-      });
-
-      localStorage.setItem("bio_view_counted", "true");
-    }
-
-    const snap = await getDoc(viewsRef);
-    document.getElementById("views").textContent =
-      "Views: " + snap.data().views;
-
-  } catch (e) {
-    console.error(e);
+  if (!alreadyCounted) {
+    await updateDoc(viewsRef, {
+      views: increment(1)
+    });
+    localStorage.setItem("bio_view_counted", "true");
   }
 }
 
-updateViews();
+incrementIfNeeded();
+
+onSnapshot(viewsRef, (snapshot) => {
+  if (snapshot.exists()) {
+    document.getElementById("views").textContent =
+      "Views: " + snapshot.data().views;
+  }
+});
 </script>
+
 
 
 </body>
