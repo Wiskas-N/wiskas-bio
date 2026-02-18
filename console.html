@@ -98,28 +98,26 @@ const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
 const bioRef = doc(db, "stats", "bio");
-const rivalRef = doc(db, "stats", "bio", "links", "rivalvisual");
-const soupRef = doc(db, "stats", "bio", "links", "soupvisuals");
 
 onSnapshot(bioRef, snap => {
     if (!snap.exists()) return;
+
     const data = snap.data();
-    document.getElementById("views").textContent = data.views || 0;
-    document.getElementById("clicks_total").textContent = data.clicks_total || 0;
-});
 
-onSnapshot(rivalRef, snap => {
-    if (!snap.exists()) return;
+    document.getElementById("views").textContent =
+        data.views || 0;
+
+    document.getElementById("clicks_total").textContent =
+        data.clicks_total || 0;
+
     document.getElementById("rivalvisual").textContent =
-        snap.data().clicks || 0;
-});
+        data.rivalclicks || 0;
 
-onSnapshot(soupRef, snap => {
-    if (!snap.exists()) return;
     document.getElementById("soupvisuals").textContent =
-        snap.data().clicks || 0;
+        data.soupclicks || 0;
 });
 </script>
+
 
 </body>
 </html>
