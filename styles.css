@@ -73,7 +73,7 @@ body {
     text-align: center;
     padding: 50px 36px 42px;
     border-radius: 34px;
-    background: rgba(10, 10, 14, 0.75);
+    background: rgba(10, 10, 14, 0.160);
     backdrop-filter: blur(10px);
 }
 
@@ -172,3 +172,4 @@ body {
         0 0 6px rgba(255,0,0,0.8),
         0 0 14px rgba(255,0,0,0.5);
 }
+
