@@ -29,31 +29,20 @@
         <div class="avatar">
             <img src="avatar.png">
         </div>
-        <h1>wiskas</h1>
-        <p>web-designer</p>
-    </div>
-
-    <div class="section">
-        <div class="section-title">Mods</div>
-        <div class="links">
-
-            <a class="link-item" href="https://t.me/rivalvisual" data-id="rivalclicks">
-                <div class="link-title">Rival Visuals</div>
-                <div class="link-url">Minecraft 1.21.4 and 1.21.8 visuals</div>
+        <h1>Wiskas</h1>
+        <p class="bio-desc">Вам картошку фри или гамбургер?</p>
+        <p class="bio-location"> <i class="fa-solid fa-location-dot"></i> Подвал </p>
+        <div class="socials">
+            <a href="https://discord.gg/1315927053559791637" target="_blank">
+                <i class="fa-brands fa-discord"></i>
             </a>
-
-            <a class="link-item" href="https://t.me/soupvisuals" data-id="soupclicks">
-                <div class="link-title">Soup Visuals</div>
-                <div class="link-url">Minecraft 1.21.4 visuals</div>
+            <a href="https://t.me/wiskas_n" target="_blank">
+                <i class="fa-brands fa-telegram"></i>
             </a>
-
         </div>
-    </div>
-
-    <div class="section">
-        <div class="section-title">Statistics</div>
-        <div class="stats-card" id="views">
-            Views: 0
+        <div class="views-fixed">
+            <i class="fa-solid fa-eye"></i>
+            <span id="views">0</span>
         </div>
     </div>
 
@@ -167,7 +156,7 @@ onSnapshot(bioRef, snap => {
 
   const data = snap.data();
   document.getElementById("views").textContent =
-    "Views: " + (data.views || 0);
+    data.views || 0;
 });
 
 document.querySelectorAll(".link-item").forEach(link => {
@@ -190,6 +179,9 @@ document.querySelectorAll(".link-item").forEach(link => {
   });
 });
 </script>
+
+
+
 
 </body>
 
