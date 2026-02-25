@@ -77,12 +77,13 @@ body {
     backdrop-filter: blur(10px);
 }
 
-.avatar img {
+.avatar video {
     width: 112px;
     height: 112px;
     border-radius: 50%;
-    margin: 0 auto 5px;
-    background: #00000000;
+    object-fit: cover;
+    display: block;
+    margin: 0 auto 26px;
 }
 
 .hero h1 {
@@ -172,4 +173,3 @@ body {
         0 0 6px rgba(255,0,0,0.8),
         0 0 14px rgba(255,0,0,0.5);
 }
-
