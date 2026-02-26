@@ -22,13 +22,13 @@ body {
     inset: 0;
     z-index: 0;
     overflow: hidden;
-    animation: backgroundBreath 8s ease-in-out infinite;
 }
 
 .bg-image {
     width: 105%;
     height: 105%;
     object-fit: cover;
+    animation: backgroundBreath 8s ease-in-out infinite;
 }
 
 @keyframes backgroundBreath {
@@ -36,7 +36,7 @@ body {
         transform: scale(1);
     }
     50% {
-        transform: scale(1.2);
+        transform: scale(1.01);
     }
     100% {
         transform: scale(1);
@@ -47,7 +47,7 @@ body {
     position: fixed;
     inset: 0;
     background: rgba(10, 20, 10, 0.85);
-    backdrop-filter: blur(20px);
+    backdrop-filter: blur(10px);
     z-index: 9999;
     display: flex;
     align-items: center;
@@ -91,7 +91,7 @@ body {
     border-radius: 34px;
     background: rgba(20, 40, 20, 0.25);
     backdrop-filter: blur(10px);
-    animation: heroBreath 6s ease-in-out infinite;
+    animation: heroBreath 2s ease-in-out infinite;
 }
 
 @keyframes heroBreath {
@@ -99,7 +99,7 @@ body {
         transform: scale(1);
     }
     50% {
-        transform: scale(1.015);
+        transform: scale(1.007);
     }
     100% {
         transform: scale(1);
