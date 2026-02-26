@@ -36,7 +36,7 @@ body {
         transform: scale(1);
     }
     50% {
-        transform: scale(1.02);
+        transform: scale(1.2);
     }
     100% {
         transform: scale(1);
@@ -227,4 +227,5 @@ body {
         0 0 6px rgba(182,255,0,0.9),
         0 0 14px rgba(182,255,0,0.7);
 }
+
 
