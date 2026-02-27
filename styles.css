@@ -243,7 +243,7 @@ max-height: 300px;
 
 .food-trigger {
 cursor: pointer;
-text-decoration: underline;
+text-decoration: none;
 }
 
 .views-fixed {
@@ -258,3 +258,4 @@ text-decoration: underline;
     z-index: 10;
 
 }
+
