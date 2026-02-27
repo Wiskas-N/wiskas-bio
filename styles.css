@@ -127,7 +127,6 @@ body {
     width: 112px;
     height: 112px;
     margin: 0 auto 26px;
-    position: relative;
     border-radius: 50%;
     overflow: hidden;
 }
@@ -157,6 +156,11 @@ body {
     font-size: 18px;
     color: #9fb7d6;
     font-weight: 600;
+}
+
+.food-trigger {
+    cursor: pointer;
+    text-decoration: underline;
 }
 
 .bio-location {
@@ -190,12 +194,6 @@ body {
     transform: translateX(5px);
 }
 
-.contact-item i {
-    margin-right: 15px;
-    color: #7fa2d0;
-    font-size: 1.2rem;
-}
-
 .about-text {
     margin-bottom: 25px;
     line-height: 1.5;
@@ -213,39 +211,6 @@ body {
     font-size: 15px;
 }
 
-.info-list i {
-    color: #7fa2d0;
-    margin-right: 10px;
-    width: 20px;
-}
-
-.easter-egg {
-position: fixed;
-inset: 0;
-display: flex;
-align-items: center;
-justify-content: center;
-background: rgba(0,0,0,0.6);
-opacity: 0;
-pointer-events: none;
-transition: opacity 0.2s ease;
-z-index: 9999;
-}
-
-.easter-egg.show {
-opacity: 1;
-}
-
-.easter-egg img {
-max-width: 300px;
-max-height: 300px;
-}
-
-.food-trigger {
-cursor: pointer;
-text-decoration: none;
-}
-
 .views-fixed {
     position: fixed;
     bottom: 18px;
@@ -256,6 +221,27 @@ text-decoration: none;
     color: #7fa2d0;
     font-size: 14px;
     z-index: 10;
-
 }
 
+.order-toast {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    padding: 14px 20px;
+    background: rgba(20, 35, 55, 0.95);
+    color: #cfd6e0;
+    border: 1px solid rgba(120,160,210,0.4);
+    border-radius: 14px;
+    font-size: 14px;
+    box-shadow: 0 0 15px rgba(80,120,180,0.25);
+    opacity: 0;
+    transform: translateY(-10px);
+    pointer-events: none;
+    transition: opacity 0.25s ease, transform 0.25s ease;
+    z-index: 9999;
+}
+
+.order-toast.show {
+    opacity: 1;
+    transform: translateY(0);
+}
