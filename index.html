@@ -74,9 +74,6 @@
     
 </div>
 
-<div id="order-toast" class="order-toast">
-    Заказ успешно оформлен!
-</div>
 
 <script>
 const startScreen = document.getElementById('start-screen');
@@ -112,16 +109,7 @@ document.querySelectorAll('.nav-link').forEach(link => {
     });
 });
 
-const toast = document.getElementById('order-toast');
 
-document.querySelectorAll('.food-trigger').forEach(el => {
-    el.addEventListener('click', () => {
-        toast.classList.add('show');
-        setTimeout(() => {
-            toast.classList.remove('show');
-        }, 1500);
-    });
-});
 </script>
 
 <script type="module">
