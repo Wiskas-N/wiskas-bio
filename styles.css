@@ -175,10 +175,6 @@ body {
     font-weight: 600;
 }
 
-.food-trigger {
-    cursor: pointer;
-    text-decoration: none;
-}
 
 .bio-location {
     font-size: 14px;
@@ -242,25 +238,3 @@ body {
     z-index: 10;
 }
 
-.order-toast {
-    position: fixed;
-    top: 20px;
-    right: 20px;
-    padding: 14px 20px;
-    background: rgba(255, 255, 255, 0.95);
-    color: #ffffff;
-    border: 1px solid rgba(255,255,255,0.4);
-    border-radius: 14px;
-    font-size: 14px;
-    box-shadow: 0 0 15px rgba(255,255,255,0.25);
-    opacity: 0;
-    transform: translateY(-10px);
-    pointer-events: none;
-    transition: opacity 0.25s ease, transform 0.25s ease;
-    z-index: 9999;
-}
-
-.order-toast.show {
-    opacity: 1;
-    transform: translateY(0);
-}
