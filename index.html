@@ -1,151 +1,95 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>чипсики</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-    <link rel="stylesheet" href="styles.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>чипсики</title>
+
+<link rel="stylesheet" href="styles.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
 </head>
 <body>
-
-<div class="background">
-    <video id="bg-video" class="bg-video" loop playsinline muted preload="none">
-        <source src="background.mp4" type="video/mp4">
-    </video>
-</div>
-
+<div class="custom-cursor"></div>
 <div id="start-screen">
-    <div class="start-title">Tap to enter</div>
+<div class="start-title">Tap to enter</div>
 </div>
 
-<div class="container">
-    
-    <nav class="nav-menu">
-        <div class="nav-link active" data-target="home">Главная</div>
-        <div class="nav-link" data-target="about">Обо мне</div>
-        <div class="nav-link" data-target="contacts">Контакты</div>
-    </nav>
+<video id="bg-video" class="bg-video" loop playsinline muted preload="none">
+<source src="background.mp4" type="video/mp4">
+</video>
 
-    <div id="home" class="section active">
-        <div class="avatar">
-            <img src="avatar.png" alt="avatar" class="avatar-img">
-        </div>
-        <h1>Wiskas</h1>
-        <p class="bio-desc">
-            Вам <span class="food-trigger">картошку фри</span> или 
-            <span class="food-trigger">гамбургер</span>?
-            <div class="views-fixed">
-                <i class="fa-solid fa-eye"></i>
-                <span id="views">0</span>
-            </div>
-        </p>
-        <p class="bio-location">
-            <i class="fa-solid fa-location-dot"></i> Подвал
-        </p>
-    </div>
 
-    <div id="about" class="section">
-        <h1>Обо мне</h1>
-        <p class="about-text">
-            Я Захар. Живу во Вьетнаме и создаю всякие интересные штуки. Люблю чай и бургеры.
-        </p>
-        <div style="text-align: center;">
-            <ul class="info-list">
-                <li><i class="fa-solid fa-code"></i> Web-Designer</li>
-                <li><i class="fa-solid fa-headphones"></i> Играю 25/8</li>
-                <li><i class="fa-solid fa-pizza-slice"></i> Ценитель фастфуда</li>
-            </ul>
-        </div>
-    </div>
 
-    <div id="contacts" class="section">
-        <h1>Контакты</h1>
-        <div class="contact-list">
-            <a href="https://t.me/wiskas_n" target="_blank" class="contact-item">
-                <i class="fa-brands fa-telegram"></i> <span>Telegram</span>
-            </a>
-            <a href="https://discord.com/users/123456789012345678" target="_blank" class="contact-item">
-                <i class="fa-brands fa-discord"></i> <span>Discord</span>
-            </a>
-        </div>
-    </div>
+<div class="card">
 
-    
+<div class="avatar">
+<video class="avatar-video" autoplay muted loop playsinline>
+<source src="avatar.mp4" type="video/mp4">
+</video>
 </div>
 
+<div class="name">Wiskas</div>
+<div class="username">@wiskas_vn</div>
+
+<div class="badges">
+<i class="fa-solid fa-laptop-code"></i>
+<i class="fa-solid fa-code"></i>
+</div>
+
+<div class="info">
+<p>14 y.o developer</p>
+<p>frontend & design</p>
+</div>
+
+<div class="social">
+<a href="https://discord.com/users/123456789012345678"><i class="fa-brands fa-discord"></i></a>
+<a href="https://t.me/wiskas_vn"><i class="fa-brands fa-telegram"></i></a>
+</div>
+
+<div class="location">
+<i class="fa-solid fa-location-dot"></i>
+vietnam
+</div>
+
+</div>
 
 <script>
-const startScreen = document.getElementById('start-screen');
-const bgVideo = document.getElementById('bg-video');
 
-function startExperience() {
-    bgVideo.muted = true;
-    bgVideo.volume = 0.6;
+const startScreen = document.getElementById("start-screen");
+const bgVideo = document.getElementById("bg-video");
 
-    bgVideo.play().then(() => {
-        bgVideo.muted = false;
-    }).catch(e => {
-        console.log('Playback blocked', e);
-    });
+function startExperience(){
 
-    startScreen.classList.add('hidden');
+if(bgVideo){
+bgVideo.muted = true;
+bgVideo.volume = 0.6;
+
+bgVideo.play().then(()=>{
+bgVideo.muted = false;
+}).catch(()=>{
+console.log("Playback blocked");
+});
 }
 
-startScreen.addEventListener('click', startExperience, { once: true });
-startScreen.addEventListener('touchstart', startExperience, { once: true });
+startScreen.classList.add("hidden");
 
-document.querySelectorAll('.nav-link').forEach(link => {
-    link.addEventListener('click', () => {
-        const target = link.getAttribute('data-target');
+}
 
-        document.querySelectorAll('.nav-link')
-            .forEach(l => l.classList.remove('active'));
-        link.classList.add('active');
+startScreen.addEventListener("click", startExperience, {once:true});
+startScreen.addEventListener("touchstart", startExperience, {once:true});
 
-        document.querySelectorAll('.section')
-            .forEach(sec => sec.classList.remove('active'));
-        document.getElementById(target).classList.add('active');
-    });
+const cursor = document.querySelector(".custom-cursor");
+
+document.addEventListener("mousemove", (e)=>{
+cursor.style.left = e.clientX + "px";
+cursor.style.top = e.clientY + "px";
 });
-
 
 </script>
 
-<script type="module">
-import { initializeApp } from "https://www.gstatic.com/firebasejs/12.9.0/firebase-app.js";
-import { getFirestore, doc, setDoc, increment, onSnapshot } from "https://www.gstatic.com/firebasejs/12.9.0/firebase-firestore.js";
 
-const firebaseConfig = {
-  apiKey: "AIzaSy...",
-  authDomain: "wiskas.firebaseapp.com",
-  projectId: "wiskas",
-  storageBucket: "wiskas.firebasestorage.app",
-  messagingSenderId: "168046348967",
-  appId: "1:168046348967:web:618ed62b398042861ca982"
-};
 
-const app = initializeApp(firebaseConfig);
-const db = getFirestore(app);
-const bioRef = doc(db, "stats", "bio");
-
-async function incrementViewOnce() {
-  const counted = localStorage.getItem("bio_view_counted");
-  if (!counted) {
-    await setDoc(bioRef, { views: increment(1) }, { merge: true });
-    localStorage.setItem("bio_view_counted", "true");
-  }
-}
-incrementViewOnce();
-
-onSnapshot(bioRef, snap => {
-  if (!snap.exists()) return;
-  document.getElementById("views").textContent = snap.data().views || 0;
-});
-</script>
 
 </body>
 </html>
-
-
-
