@@ -34,60 +34,63 @@
         <source src="avatar.mp4" type="video/mp4; codecs=avc1.42E01E,mp4a.40.2">
         <source src="avatar.mp4" type="video/mp4">
       </video>
+      <div class="profile__status" id="status-dot"></div>
     </div>
+
     <h1 class="profile__name">Вискас</h1>
-    <div class="profile__username">@wiskas_vn</div>
-    <div class="profile__badges">
-      <i class="fa-solid fa-laptop-code"></i>
-      <i class="fa-solid fa-code"></i>
-    </div>
-    <div class="profile__info">
-      <p class="profile__info-item">
-        ТГК Soup Visuals -
-        <a href="https://t.me/soupvisuals">t.me/soupvisuals</a>
-      </p>
-      <p class="profile__info-item">
-        ТГК Rival Visuals -
-        <a href="https://t.me/rivalvisual">t.me/rivalvisual</a>
-      </p>
-    </div>
-    <div class="profile__divider"></div>
-    <div class="profile__social">
-      <a class="profile__social-link" href="https://discord.com/users/123456789012345678">
+    <a class="profile__username" href="https://t.me/wiskas_vn" target="_blank">@wiskas_vn</a>
+
+    <a class="presence" href="https://discord.com/users/1315927053559791637" target="_blank">
+      <div class="presence__header">
         <i class="fa-brands fa-discord"></i>
+        <span>Discord</span>
+        <div class="presence__dot" id="presence-dot"></div>
+      </div>
+      <div class="presence__body" id="presence-body">
+        <div class="presence__loading">
+          <div class="presence__spinner"></div>
+          подключение...
+        </div>
+      </div>
+    </a>
+
+    <div class="tg-links">
+      <a class="tg-link" href="https://t.me/soupvisuals" target="_blank">
+        <div class="tg-link__header">
+          <i class="fa-brands fa-telegram tg-link__icon"></i>
+          <span class="tg-link__name">Soup Visuals</span>
+          <span class="tg-link__handle">t.me/soupvisuals</span>
+        </div>
       </a>
-      <a class="profile__social-link" href="https://t.me/wiskas_vn">
-        <i class="fa-brands fa-telegram"></i>
+      <a class="tg-link" href="https://t.me/rivalvisual" target="_blank">
+        <div class="tg-link__header">
+          <i class="fa-brands fa-telegram tg-link__icon"></i>
+          <span class="tg-link__name">Rival Visuals</span>
+          <span class="tg-link__handle">t.me/rivalvisual</span>
+        </div>
       </a>
     </div>
   </main>
 
   <script>
-    const cursor = document.querySelector(".cursor")
-    const startScreen = document.getElementById("start-screen")
-    const bgVideo = document.getElementById("bg-video")
-    const bgAudio = document.getElementById("bg-audio")
-    const avatarVideo = document.querySelector(".profile__avatar-video")
-    const profile = document.querySelector(".profile")
+    const DISCORD_ID = "1315927053559791637"
 
-    const isTouchDevice =
-      "ontouchstart" in window || navigator.maxTouchPoints > 0
+    const cursor      = document.querySelector(".cursor")
+    const startScreen = document.getElementById("start-screen")
+    const bgVideo     = document.getElementById("bg-video")
+    const bgAudio     = document.getElementById("bg-audio")
+    const avatarVideo = document.querySelector(".profile__avatar-video")
+    const profile     = document.querySelector(".profile")
+    const isTouchDevice = "ontouchstart" in window || navigator.maxTouchPoints > 0
 
     function tryPlay(media, retries = 3) {
       if (!media) return Promise.resolve()
-      const attempt = () =>
-        media.play().catch(err => {
-          if (retries > 0) {
-            return new Promise(res => setTimeout(res, 300))
-              .then(() => tryPlay(media, retries - 1))
-          }
-        })
+      const attempt = () => media.play().catch(() => {
+        if (retries > 0) return new Promise(r => setTimeout(r, 300)).then(() => tryPlay(media, retries - 1))
+      })
       if (media.readyState < 2) {
         return new Promise(resolve => {
-          const onReady = () => {
-            media.removeEventListener("canplay", onReady)
-            attempt().then(resolve)
-          }
+          const onReady = () => { media.removeEventListener("canplay", onReady); attempt().then(resolve) }
           media.addEventListener("canplay", onReady)
           media.load()
         })
@@ -98,16 +101,11 @@
     function startExperience() {
       const videoPromise = tryPlay(bgVideo)
       const audioPromise = tryPlay(bgAudio)
-
       tryPlay(avatarVideo)
-
       Promise.allSettled([videoPromise, audioPromise]).then(() => {
         startScreen.classList.add("start--hidden")
-        setTimeout(() => {
-          profile.classList.add("profile--visible")
-        }, 300)
+        setTimeout(() => profile.classList.add("profile--visible"), 300)
       })
-
       setTimeout(() => {
         startScreen.classList.add("start--hidden")
         setTimeout(() => profile.classList.add("profile--visible"), 300)
@@ -115,10 +113,7 @@
     }
 
     startScreen.addEventListener("click", startExperience, { once: true })
-    startScreen.addEventListener("touchstart", startExperience, {
-      once: true,
-      passive: true
-    })
+    startScreen.addEventListener("touchstart", startExperience, { once: true, passive: true })
 
     document.addEventListener("visibilitychange", () => {
       if (!document.hidden) {
@@ -131,19 +126,101 @@
     if (!isTouchDevice) {
       document.addEventListener("mousemove", e => {
         cursor.style.left = e.clientX + "px"
-        cursor.style.top = e.clientY + "px"
+        cursor.style.top  = e.clientY + "px"
         cursor.style.opacity = "1"
       })
-      document.addEventListener("mouseleave", () => {
-        cursor.style.opacity = "0"
-      })
-      document.addEventListener("mouseenter", () => {
-        cursor.style.opacity = "1"
-      })
+      document.addEventListener("mouseleave", () => cursor.style.opacity = "0")
+      document.addEventListener("mouseenter", () => cursor.style.opacity = "1")
     } else {
       cursor.style.display = "none"
       document.body.style.cursor = "auto"
     }
+
+    const S = {
+      online:  { color: "#3ba55c", glow: "rgba(59,165,92,.7)",   label: "Online" },
+      idle:    { color: "#faa81a", glow: "rgba(250,168,26,.7)",  label: "Idle" },
+      dnd:     { color: "#ed4245", glow: "rgba(237,66,69,.7)",   label: "DND" },
+      offline: { color: "#747f8d", glow: "rgba(116,127,141,.4)", label: "Offline" }
+    }
+
+    let hb = null
+
+    function connectLanyard() {
+      const ws = new WebSocket("wss://api.lanyard.rest/socket")
+      ws.onopen = () => ws.send(JSON.stringify({ op: 2, d: { subscribe_to_id: DISCORD_ID } }))
+      ws.onmessage = ev => {
+        const { op, d, t } = JSON.parse(ev.data)
+        if (op === 1) hb = setInterval(() => ws.readyState === 1 && ws.send(JSON.stringify({ op: 3 })), d.heartbeat_interval)
+        if (op === 0 && (t === "INIT_STATE" || t === "PRESENCE_UPDATE")) render(d)
+      }
+      ws.onclose = () => { clearInterval(hb); setTimeout(connectLanyard, 3000) }
+      ws.onerror = () => ws.close()
+    }
+
+    function x(s) {
+      return String(s || "").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;")
+    }
+
+    function render(data) {
+      const sk = data.discord_status || "offline"
+      const s  = S[sk] || S.offline
+
+      const dot = document.getElementById("status-dot")
+      dot.style.background = s.color
+      dot.style.boxShadow  = `0 0 0 2px #000, 0 0 8px ${s.glow}, 0 0 16px ${s.glow}`
+
+      const pdot = document.getElementById("presence-dot")
+      pdot.style.background = s.color
+      pdot.style.boxShadow  = `0 0 6px ${s.glow}, 0 0 14px ${s.glow}`
+
+      const u = data.discord_user
+      const av = u.avatar
+        ? `https://cdn.discordapp.com/avatars/${u.id}/${u.avatar}.${u.avatar.startsWith("a_")?"gif":"png"}?size=80`
+        : `https://cdn.discordapp.com/embed/avatars/0.png`
+
+      let html = `
+        <div class="presence__user">
+          <img class="presence__user-av" src="${x(av)}" alt="">
+          <div class="presence__user-info">
+            <span class="presence__user-name">${x(u.global_name || u.username)}</span>
+            <span class="presence__user-status" style="color:${s.color};text-shadow:0 0 8px ${s.glow}">● ${s.label}</span>
+          </div>
+        </div>`
+
+      if (data.listening_to_spotify && data.spotify) {
+        const sp = data.spotify
+        const pct = (() => {
+          const ts = sp.timestamps
+          if (!ts?.start || !ts?.end) return 0
+          return Math.min(100, Math.max(0, (Date.now() - ts.start) / (ts.end - ts.start) * 100))
+        })()
+        html += `
+          <div class="presence__spotify">
+            <img class="presence__spotify-art" src="${x(sp.album_art_url)}" alt="">
+            <div class="presence__spotify-info">
+              <div class="presence__spotify-badge"><i class="fa-brands fa-spotify"></i> Spotify</div>
+              <div class="presence__spotify-song">${x(sp.song)}</div>
+              <div class="presence__spotify-artist">${x(sp.artist)}</div>
+              <div class="presence__bar"><div class="presence__bar-fill" style="width:${pct}%"></div></div>
+            </div>
+          </div>`
+      }
+
+      if (data.activities?.length) {
+        const act = data.activities.find(a => a.type === 0 || a.type === 1)
+        if (act) html += `
+          <div class="presence__activity">
+            <div class="presence__activity-playing">Playing</div>
+            <div class="presence__activity-name">${x(act.name)}</div>
+            ${act.details ? `<div class="presence__activity-detail">${x(act.details)}</div>` : ""}
+            ${act.state   ? `<div class="presence__activity-state">${x(act.state)}</div>`   : ""}
+          </div>`
+      }
+
+      document.getElementById("presence-body").innerHTML = html
+    }
+
+    connectLanyard()
   </script>
 </body>
 </html>
