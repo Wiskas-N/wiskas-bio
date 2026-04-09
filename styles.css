@@ -67,6 +67,11 @@ body {
   transition:background 1s ease;
 }
 
+.links-disabled .presence,
+.links-disabled .tg-btn {
+  pointer-events:none;
+}
+
 .presence {
   display:block;color:inherit;padding:22px 22px 18px;
   position:relative;z-index:1;

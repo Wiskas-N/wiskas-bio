@@ -94,11 +94,17 @@
       return attempt()
     }
 
+    const card = document.querySelector(".card")
+    card.classList.add("links-disabled")
+
     function startExperience() {
-      bgAudio.volume = 0.2
+      bgAudio.volume = 1
       tryPlay(bgVideo); tryPlay(bgAudio)
       startScreen.classList.add("start--hidden")
-      setTimeout(() => profile.classList.add("profile--visible"), 250)
+      setTimeout(() => {
+        profile.classList.add("profile--visible")
+        card.classList.remove("links-disabled")
+      }, 250)
     }
 
     startScreen.addEventListener("click",      startExperience, { once: true })
