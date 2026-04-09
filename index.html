@@ -98,7 +98,7 @@
     card.classList.add("links-disabled")
 
     function startExperience() {
-      bgAudio.volume = 1
+      bgAudio.volume = 0.2
       tryPlay(bgVideo); tryPlay(bgAudio)
       startScreen.classList.add("start--hidden")
       setTimeout(() => {
@@ -235,23 +235,31 @@
           </div>`
       }
 
-      if (data.activities?.length) {
-        const act = data.activities.find(a => a.type === 0 || a.type === 1)
-        if (act) {
-          const appIcon = act.application_id
-            ? `https://cdn.discordapp.com/app-icons/${act.application_id}/${act.assets?.large_image}.png?size=64`
-            : null
-          dynHtml += `
-            <div class="activity">
-              ${appIcon ? `<img class="activity__icon" src="${x(appIcon)}" alt="" onerror="this.style.display='none'">` : `<div class="activity__icon activity__icon--fallback"><i class="fa-solid fa-gamepad"></i></div>`}
-              <div class="activity__info">
-                <div class="activity__playing">Playing a game</div>
-                <div class="activity__name">${x(act.name)}</div>
-                ${act.details ? `<div class="activity__detail">${x(act.details)}</div>` : ""}
-                ${act.state   ? `<div class="activity__state">${x(act.state)}</div>`   : ""}
-              </div>
-            </div>`
-        }
+      const gameAct   = data.activities?.find(a => a.type === 0 || a.type === 1)
+      const customAct = data.activities?.find(a => a.type === 4)
+
+      if (gameAct) {
+        const appIcon = gameAct.application_id
+          ? `https://cdn.discordapp.com/app-icons/${gameAct.application_id}/${gameAct.assets?.large_image}.png?size=64`
+          : null
+        dynHtml += `
+          <div class="activity">
+            ${appIcon ? `<img class="activity__icon" src="${x(appIcon)}" alt="" onerror="this.style.display='none'">` : `<div class="activity__icon activity__icon--fallback"><i class="fa-solid fa-gamepad"></i></div>`}
+            <div class="activity__info">
+              <div class="activity__playing">Playing a game</div>
+              <div class="activity__name">${x(gameAct.name)}</div>
+              ${gameAct.details ? `<div class="activity__detail">${x(gameAct.details)}</div>` : ""}
+              ${gameAct.state   ? `<div class="activity__state">${x(gameAct.state)}</div>`   : ""}
+            </div>
+          </div>`
+      } else if (customAct && (customAct.state || customAct.emoji)) {
+        const emoji = customAct.emoji?.name || ""
+        const text  = customAct.state || ""
+        dynHtml += `
+          <div class="custom-status">
+            ${emoji ? `<span class="custom-status__emoji">${x(emoji)}</span>` : ""}
+            ${text  ? `<span class="custom-status__text">${x(text)}</span>`   : ""}
+          </div>`
       }
 
       const dynEl = document.getElementById("presence-dynamic")
